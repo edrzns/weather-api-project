@@ -13,9 +13,12 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/edrzns/weather-api-project/issues"
   },
-  "homepage": "https://github.com/edrzns/weather-api-project#readme"
+  "homepage": "https://github.com/edrzns/weather-api-project#readme",
+  "dependencies": {
+    "dotenv": "^17.2.3"
+  }
 }
