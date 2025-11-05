@@ -49,8 +49,9 @@ async function getWeather() {
     const openWeatherData = openWeatherResult.data;
     const weatherApiData = weatherApiResult.data;
 
-    console.log('OpenWeather Data:', openWeatherData);
-    console.log('WeatherAPI Data:', weatherApiData);
+    console.log(`Location: ${city}`);
+    console.log(`OpenWeatherMap Temperature: ${openWeatherData.main.temp}°C`);
+    console.log(`WeatherAPI Temperature: ${weatherApiData.current.temp_c}°C`);
 
     if (openWeatherResult.duration < weatherApiResult.duration) {
       console.log(
