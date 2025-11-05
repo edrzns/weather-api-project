@@ -10,11 +10,19 @@ const openWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city
 const weatherApiUrl = `https://api.weatherapi.com/v1/current.json?key=${weatherApiKey}&q=${city}`;
 
 const openWeatherPromise = timePromise(
-  fetch(openWeatherUrl).then((res) => res.json()),
+  fetch(openWeatherUrl)
+    .then((res) => res.json())
+    .catch((originalError) => {
+      throw new Error(`OpenWeatherMap API failed: ${originalError.message || originalError}`);
+    }),
   'OpenWeather'
 );
 const weatherApiPromise = timePromise(
-  fetch(weatherApiUrl).then((res) => res.json()),
+  fetch(weatherApiUrl)
+    .then((res) => res.json())
+    .catch((originalError) => {
+      throw new Error(`WeatherAPI failed: ${originalError.message || originalError}`);
+    }),
   'WeatherAPI'
 );
 
@@ -56,7 +64,7 @@ async function getWeather() {
       console.log(`Both APIs responded in the same time: ${openWeatherResult.duration}ms`);
     }
   } catch (error) {
-    console.error('Error fetching weather data:', error);
+    console.error('An error occurred during API fetching:', error.message);
   }
 }
 
