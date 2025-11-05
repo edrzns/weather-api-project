@@ -9,20 +9,17 @@ const weatherApiKey = process.env.WEATHER_API_KEY;
 const openWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${openWeatherApiKey}&units=metric`;
 const weatherApiUrl = `https://api.weatherapi.com/v1/current.json?key=${weatherApiKey}&q=${city}`;
 
-fetch(openWeatherUrl)
-  .then(response => response.json())
-  .then(data => {
-    console.log('OpenWeatherMap Data:', data);
-  })
-  .catch(error => {
-    console.error('Error fetching OpenWeatherMap data:', error);
-  });
+const openWeatherPromise = fetch(openWeatherUrl).then(res => res.json());
+const weatherApiPromise = fetch(weatherApiUrl).then(res => res.json());
 
-fetch(weatherApiUrl)
-  .then(response => response.json())
-  .then(data => {                                                                                                                                                                                                                                                                                               
-    console.log('WeatherAPI Data:', data);
+Promise.all([openWeatherPromise, weatherApiPromise])
+  .then(data => {
+    const openWeatherData = data[0];
+    const weatherApiData = data[1];
+
+    console.log('OpenWeather Data:', openWeatherData);
+    console.log('WeatherAPI Data:', weatherApiData);
   })
   .catch(error => {
-    console.error('Error fetching WeatherAPI data:', error);
+    console.error('Error fetching weather data:', error);
   });
